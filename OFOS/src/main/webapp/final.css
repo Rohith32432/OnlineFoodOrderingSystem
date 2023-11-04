@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Agdasima&family=Dancing+Script:wght@700&family=Kaushan+Script&family=Pacifico&family=Rajdhani:wght@600&display=swap');
+body{
+    scroll-behavior: smooth;
+}
+
+.haveit {
+    background-image: linear-gradient(180deg, rgba(11, 11, 11, 0.799) 55%, rgba(0, 0, 0, 0.427) 100%), url("./static/home.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 60vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .context {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    color: #fff;
+    flex-direction: column;
+    text-align: center;
+    width: 90%;
+    top: 10%;
+    overflow: hidden;
+  }
+  @media  screen and (max-width: 900px) {
+    .context{
+      padding: 5%;
+      top: 10%;
+    }
+    .haveit .context .data {
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .haveit .context .data #Button{
+      width: 50%;
+      border-radius: 12px;
+    }
+    .context .data .makeup input{ 
+      width: 100%;
+    }
+  }
+  .context input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    width: 500px;
+    background: #fff8f5;
+    font-size: large;
+    padding: 13px;
+    border: none;
+    border-radius: 0px 10px 10px 0px;
+    outline: none;
+  }
+    .context input:focus {
+    box-shadow:  0px 0px 8px rgb(199, 53, 0);
+  }
+  
+  .context h3 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+    /* margin: 0; */
+  }
+  
+  .context h1 {
+    font-family: 'Kaushan Script', cursive;
+    text-transform: uppercase;
+    font-size: 4.5rem;
+    letter-spacing: 4px;
+    margin: 0;
+  }
+  
+  .context .data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  
+  }
+  .context .data .makeup{
+    display: flex;
+  
+  }
+  
+  .context .data span {
+    position: relative;
+    cursor: pointer;
+    padding: 9.2px;
+    background-color: orangered;
+    width: 80px;
+    border-radius: 10px 0px 0px 10px;
+  }
+  
+  .context .data i {
+    font-size: 1.8rem;
+    color: #000000;
+  }
+.main-tell{
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  align-items: center;
+}
+.main-tell h1{
+    text-transform: uppercase;
+    font-size: 3rem;
+}
+.tell {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    transition: .3s ease;
+    height: 350px;
+    width: 95%;
+    padding: 2px;
+    background-color: rgb(253, 231, 225);
+    margin: 10px;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.sec {
+    height: 100%;
+    width: 60%;
+    position: relative;
+}
+
+.m-content {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    box-sizing: border-box;
+    /* margin: 5px; */
+}
+
+.m-content h1 {
+    font-size: 4rem;
+    text-transform: capitalize;
+    color: rgb(237, 63, 0);
+    margin: 5px;
+}
+
+.m-content p {
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+.tell .sec img {
+    height: 100%;
+    /* border-radius: 0px  0% 250% 0px; */
+    clip-path: polygon(0 0, 100% 0, 56% 100%, 0 100%);
+    object-fit: cover;
+    /* border-radius: inherit; */
+    width: 100%;
+}
+
+.m-content button,.overview button {
+    font-size: larger;
+    padding: 6px;
+}
+
+.tell button,.overview button {
+    background-color: #ff4400;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+
+.tell button:hover {
+    background-color: rgb(218, 58, 0);
+}
+
+.main-tell .tell:hover{
+    box-shadow: 0px 0px 10px rgb(41, 41, 41);
+}
+.tell:nth-child(odd) .sec img {
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+
+@media only screen and (max-width: 900px) {
+    .tell {
+        position: relative;
+        display: block;
+        height: 200px;
+        width: 100%;
+        background-color: rgb(255, 241, 237);
+        margin-top: 15px;
+        box-sizing: border-box;
+    }
+
+    .m-content {
+        background: linear-gradient(261deg, rgba(0, 0, 0, 0.922) 30%, rgba(6, 6, 6, 0.07895658263305327) 95%);
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        align-items: end;
+        box-sizing: border-box;
+        /* background-color: black; */
+    }
+
+    .m-content p {
+        font-size: medium;
+        display: none;
+        color: aliceblue;
+    }
+
+    .m-content h1 {
+        font-size: 2.8rem;
+        /* position: absolute; */
+        color: #ffd9d0;
+        font-style: italic;
+        text-transform: uppercase;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        right: 0;
+    }
+
+    .sec {
+        width: 100%;
+        position: absolute;
+    }
+
+    .sec img {
+        height: 100%;
+        clip-path: none;
+        object-fit: cover;
+        width: 100%;
+    }
+    .tell:nth-child(odd) .sec img {
+        clip-path: none;
+    }
+    .m-content button {
+        background-color: #fc5011;
+        font-size: medium;
+        padding: 6px;
+        width: 25%;
+        margin-top: 5px;
+        transform: translateX(-30%);
+    }
+}
+
+.overview {
+    display: flex;
+    align-items: center; 
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 2%;
+}
+
+.visual {
+    flex: 1; 
+    padding: 20px; 
+    order: 2;
+}
+
+.visual img {
+    max-width: 100%; 
+    border-radius: 5%;
+}
+
+.text {
+    /* background-color: #ffcebc; */
+    height: 100%;
+    flex: 1; 
+    padding: 20px; 
+    box-sizing: border-box;
+}
+.text p{
+    padding: 15px;
+    font-size: 1.3rem;
+}
+
+.secondary {
+    font-size: 44px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.primary {
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.tertiary {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.bootstrap-btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  color: #fff;
+  background-color: #ff5100;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.bootstrap-btn:hover {
+  background-color: #d94100;
+}
+
+.bootstrap-btn:active {
+  background-color: #d94100;
+  box-shadow: 0 0 0 0.2rem rgba(255, 60, 0, 0.324);
+  transform: scale(.95);
+}
+
+.bootstrap-btn:focus,
+.bootstrap-btn.focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 85, 0, 0.304);
+}
+
+

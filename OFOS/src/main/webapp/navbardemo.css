@@ -1,0 +1,215 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Agdasima&family=Dancing+Script:wght@700&family=Kaushan+Script&family=Pacifico&family=Rajdhani:wght@600&display=swap');
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  background-image: linear-gradient(180deg,rgba(0, 0, 0, 0.164),rgba(0, 0, 0, 0.078)) ;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.ntotal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  /* background-color: rgb(0, 0, 0); */
+  background: transparent;
+  height: 10vh;
+  width: 100%;
+}
+
+.nlogo h3 {
+  /* position: absolute; */
+  top: 0px;
+  /* transform: translate(60px,-8px); */
+  font-size: 2rem;
+  color: #ffffffc0;
+  text-transform: capitalize;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.nlogo img {
+
+  height: 70%;
+  width: 100%;
+  cursor: pointer;
+
+}
+
+.ninside.activex {
+  color: orangered;
+}
+
+/* .search input {
+    height: 50%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.753);
+    border-radius: 12px;
+    border: 2px solid rgb(255, 255, 255);
+  }
+   */
+.ncontainer {
+  display: flex;
+  gap: 1rem;
+  transform: translateX(70%);
+
+}
+
+.ninside {
+  font-size: medium;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  box-sizing: border-box;
+  margin-right: 15px;
+  color: rgb(255, 255, 255);
+  transition: 0.5s;
+}
+
+.ncontainer .ninside:hover {
+  color: orangered;
+  transform: scale(1.06);
+}
+
+.ncontainer .ninside::after {
+  display: block;
+  content: ' ';
+  height: 2px;
+  transition: width 0.2s ease 0s;
+  width: 0px;
+  transition: 0.25s;
+}
+
+.ncontainer .ninside:hover::after {
+  width: 100%;
+  left: 0;
+  background-color: rgba(255, 241, 236, 0.954);
+}
+
+.nmenu {
+  display: none;
+}
+
+@media only screen and (max-width: 900px) {
+  .nmenu {
+    display: block;
+    position: absolute;
+    right: 10%;
+    box-sizing: border-box;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .ncontainer {
+    width: 50%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.553);
+    backdrop-filter: blur(4px);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    /* to get the transition */
+    transform: translateX(200%);
+    transition: all 0.2s linear;
+    flex-direction: column;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .active {
+    transform: translateX(100%);
+    opacity: 1;
+    right: 0;
+    visibility: visible;
+  }
+}
+
+.bootstrap-btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  color: #fff;
+  background-color: #ff5100;
+  margin: 5px;
+}
+
+.bootstrap-btn:hover {
+  background-color: #d94100;
+}
+
+.bootstrap-btn:active {
+  background-color: #d94100;
+  box-shadow: 0 0 0 0.2rem rgba(255, 60, 0, 0.324);
+  transform: scale(.95);
+}
+
+.bootstrap-btn:focus,
+.bootstrap-btn.focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 85, 0, 0.304);
+}
+
+.context {
+  /* background-color: #fff; */
+  display: flex;
+  color: #fff;
+  position: absolute;
+  top: 20%;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  /* gap: 2rem; */
+}
+
+.context input[type="text"] {
+  width: 100%;
+  max-width: 400px;
+  background: #fff7f4e9;
+  font-size: medium;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+
+}
+
+.context h3 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.5rem;
+  /* margin: 0; */
+}
+
+.context h1 {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 4rem;
+  text-transform: uppercase;
+  font-size: 5rem;
+  letter-spacing: 4px;
+  margin: 0;
+}
+
+.context .data {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+
+}
+
+.context .data i{
+  /* position: absolute; */
+}
