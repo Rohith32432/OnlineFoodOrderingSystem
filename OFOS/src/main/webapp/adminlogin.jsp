@@ -8,7 +8,7 @@
             font-family: Arial, sans-serif;
             background: linear-gradient(45deg, #FF5733, #FF5733 50%, #fff 50%);
             margin: 0;
-            padding: 0;
+            padding: 10;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,11 +16,11 @@
         }
         .container {
             max-width: 400px;
-            padding: 20px;
+            padding: 80px;
             background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
+            border-radius: 40px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin-left: 40px; /* Increase the left margin */
+            margin-left: 10px; /* Increase the left margin */
             transition: transform 0.3s ease-in-out; /* Add transition for hover effect */
         }
         .container:hover {
@@ -74,6 +74,8 @@
                 opacity: 1;
             }
         }
+        
+        
     </style>
 </head>
 <body>

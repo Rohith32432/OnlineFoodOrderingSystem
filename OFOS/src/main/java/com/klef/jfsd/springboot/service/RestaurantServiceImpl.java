@@ -116,5 +116,8 @@ public Restaurant viewrestaurantbyid(int rid) {
 public List<Restaurant> viewrest() {
 	return resrepo.findAll();
 }
+public Items itembyid(int id) {
+	return itemsRepository.findById(id).get();
+}
 
 }

@@ -19,5 +19,6 @@ public interface RestaurantService {
   public String additems(Items item);
   public String deleteitems(int id);
   public List<Items> viewitems(int restid);
+  public Items itembyid(int id);
 
 }

@@ -16,6 +16,7 @@ public interface CustomerService {
 	public List<cart> viewcartitems();
 	public List<cart> custitems(int id);
 	public Items cartbyid(int id);
-	public String addcart(cart c);
+	public String addcart(cart c,int itmid,int cid);
 	public String remove(int id);
+	public void increment(int count,int id,int itmid);
 }

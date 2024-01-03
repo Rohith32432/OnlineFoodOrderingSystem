@@ -175,14 +175,13 @@
         <div class="maxi">
     	<c:forEach items="${item}"  var="itm"> 
             <div class="card">
-                <img src="${itm.url}" alt="Food Image">
+                <img src='displayitemimage?id=${itm.id}' alt="Food Image">
                 <div class="card-content">
                     <div>
-                        <h2>Name: <span>${itm.name}</span></h2>
-                        <h3>Price: $ ${itm.price} </h3>
-                        <h3>Rating: 4.5</h3>
+                        <h2><span>${itm.name}</span></h2>
+                        <h3>Price: ${itm.price}/- </h3>
                     </div>
-                  <button class="view" id="ctvalue" value="${itm.id}">View</button>
+                  <button class="view" id="ctvalue" value="${itm.id}">ADD</button>
                 </div>
             </div>
    		 </c:forEach> 
@@ -194,20 +193,12 @@
                 <div class="raw">
                     <ul>
                         <li>
-                            <h2>name <span>Rohith</span>
+                            <h2>Name: <span>${itm.name}</span>
                         </li>
                         <li>
-                            <h2>location <span>nsnk</span>
+                            <h2>Price: <span>${itm.price}</span>
                         </li>
-                        <li>
-                            <h2>content <span>${res.email}</span>
-                        </li>
-                        <li>
-                            <h2>Rating <span>vndn</span>
-                        </li>
-                        <li>
-                            <h2>orders <span> d jkbk</span>
-                        </li>
+                        
                     </ul>
                 </div>
                 <div class="actons">
@@ -463,6 +454,11 @@
             }
 
 </style>      
+<br>
+<br>
+<br>
+<br>
+
    <%@ include file="footer.jsp" %> 
 </body>
 </html>

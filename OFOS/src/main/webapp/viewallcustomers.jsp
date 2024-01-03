@@ -7,17 +7,14 @@
     <link type="text/css" rel="stylesheet" href="css/style.css">
     <style>
         body {
-            background: linear-gradient(45deg, #FF5733 0%, #FF5733 50%, #fff 50%);
             text-align: center;
             margin: 0;
             padding: 0;
-            display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        
         .container {
             background: white;
             border: 1px solid #0077B6;
@@ -33,9 +30,9 @@
             width: 100%;
             border-collapse: collapse;
             border: 1px solid #0077B6;
-            margin-top: 20px;
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
@@ -71,7 +68,6 @@
             background-color: #FF8C69; /* Hover background color */
             transition: background-color 0.3s;
         }
-
     </style>
 </head>
 
@@ -81,33 +77,35 @@
 
     <h3 align="center"><u>View All Customers</u></h3>
 
-    <table align="center" border="2">
-        <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>GENDER</th>
-            <th>DOB</th>
-            <th>EMAIL</th>
-            <th>LOCATION</th>
-            <th>CONTACT NO</th>
-            <th>ACTION</th>
-        </tr>
-
-        <c:forEach items="${custdata}" var="cust">
+    <div class="container"> <!-- Added a container around the table -->
+        <table align="center" border="2">
             <tr>
-                <td><c:out value="${cust.id}" /></td>
-                <td><c:out value="${cust.name}" /></td>
-                <td><c:out value="${cust.gender}" /></td>
-                <td><c:out value="${cust.dateofbirth}" /></td>
-                <td><c:out value="${cust.email}" /></td>
-                <td><c:out value="${cust.location}" /></td>
-                <td><c:out value="${cust.contact}" /></td>
-                <td>
-                    <a href='<c:url value="viewc?id=${cust.id}"></c:url>'>View</a>
-                </td>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>GENDER</th>
+                <th>DOB</th>
+                <th>EMAIL</th>
+                <th>LOCATION</th>
+                <th>CONTACT NO</th>
+                <th>ACTION</th>
             </tr>
-        </c:forEach>
-    </table>
+
+            <c:forEach items="${custdata}" var="cust">
+                <tr>
+                    <td><c:out value="${cust.id}" /></td>
+                    <td><c:out value="${cust.name}" /></td>
+                    <td><c:out value="${cust.gender}" /></td>
+                    <td><c:out value="${cust.dateofbirth}" /></td>
+                    <td><c:out value="${cust.email}" /></td>
+                    <td><c:out value="${cust.location}" /></td>
+                    <td><c:out value="${cust.contact}" /></td>
+                    <td>
+                        <a href='<c:url value="viewc?id=${cust.id}"></c:url>'>View</a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </body>
 
 </html>

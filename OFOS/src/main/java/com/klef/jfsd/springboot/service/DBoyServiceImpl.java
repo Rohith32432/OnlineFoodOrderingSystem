@@ -4,17 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.klef.jfsd.springboot.model.DBoy;
+import com.klef.jfsd.springboot.model.DBoyDetails;
+import com.klef.jfsd.springboot.repository.DBoyDetailsRepository;
 import com.klef.jfsd.springboot.repository.DBoyRepository;
 
 @Service
 public class DBoyServiceImpl implements DBoyService {
-	@Autowired
- private DBoyRepository dboyrepository;
+
+  @Autowired
+  private DBoyDetailsRepository dboydetailsrepository;
  
-	@Override
-	public DBoy checkdboylogin(String uname, String pwd) {
-		
-		return dboyrepository.checkdboylogin(uname, pwd);
-	}
-	
+  @Override
+  public DBoyDetails checkdboylogin(String uname, String pwd) {
+    
+    return dboydetailsrepository.checkdboylogin(uname, pwd);
+  }
+  
 }

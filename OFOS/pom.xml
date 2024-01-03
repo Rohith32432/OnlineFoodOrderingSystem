@@ -79,6 +79,12 @@
  <artifactId>jakarta.servlet.jsp.jstl</artifactId>
  <version>3.0.0</version><!--$NO-MVN-MAN-VER$-->
 </dependency>
+	
+	<dependency>
+  <groupId>com.stripe</groupId>
+  <artifactId>stripe-java</artifactId>
+  <version>24.0.0</version>
+</dependency>
 		
 	</dependencies>
 

@@ -5,11 +5,10 @@
     <link type="text/css" rel="stylesheet" href="css/style.css">
     <style>
     body {
-        background: linear-gradient(45deg, #FF5733 0%, #FF5733 50%, #fff 50%);
         text-align: center;
         margin: 0;
         padding: 0;
-        display: flex;
+
         justify-content: center;
         align-items: center;
         min-height: 100vh;

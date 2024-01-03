@@ -19,7 +19,6 @@
     <div class="haveit">
         <div class="context">
             <h1>have it</h1>
-            <h3>Enter your delivery location</h3>
             <div class="data">
                 <div class="makeup">
                 <span><i class='bx bxs-location-plus' id="clk"></i></span>
@@ -47,27 +46,27 @@
                    <br>
                    Desire It, Attain It, Seize It!
                </p>
-               <a href="#menu" class="btn"><button>Explore Menu</button></a>
+               <a href="customerreg" class="btn"><button>Explore Menu</button></a>
            </div>
        </div>
-       <div class="main-tell">
+       <div class="main-tell" id="tell">
            <h1>TOP RESTAURANTS</h1>
                   <div class="tell"data-aos="fade-right">
                <div class="sec">
-                   <img src="./static/kfc.png" alt="">
+                   <img src="./static/kfc.jpg" alt="">
                </div>
                <div class="m-content">
                    <h1>KFC</h1>
                    <p>Finger Lickin' Good!<br>
                       It's 'finger lickin' good.
                    </p>
-                   <button>View</button>
+                   <a href="customerreg"><button>View</button></a>
                </div>
            </div>
        
            <div class="tell"data-aos="fade-left" >
                <div class="sec" style="order: 2;">
-                   <img src="./static/dominos.png" alt="">
+                   <img src="./static/dominos.jpg" alt="">
                  
                </div>
                <div class="m-content">
@@ -75,19 +74,19 @@
                    <p>You Got 30 Minutes<br>
                       Oh yes we did!
                    </p>
-                   <button>View</button>
+                   <a href="customerreg"><button>View</button></a>
                </div>
            </div>
            <div class="tell"data-aos="fade-right">
                <div class="sec">
-                   <img src="./static/barbeque.png" alt="">
+                   <img src="./static/bbq.jpg" alt="">
                </div>
                <div class="m-content">
                    <h1>Barbeque</h1>
                    <p>Barbeque Nation: Live the Kebab Lovers Dream<br>
                       Wish Grill Eat Repeat
                    </p>
-                   <button>View</button>
+                   <a href="customerreg"><button>View</button></a>
                </div>
            </div>
         </div>
@@ -120,18 +119,21 @@
             }
         });
 
+      
         btn.addEventListener('click', () => {
-        	var apiUrl = "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon;
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('kl').innerHTML = data.display_name;
-                })
-                .catch(error => console.error('Error:', error));
-        });
-
+            var apiUrl = "https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon;
+              fetch(apiUrl)
+                  .then(response => response.json())
+                  .then(data => {
+                    if( data.display_name=='Soul Buoy')
+                      document.getElementById('kl').innerHTML = "location temporarily out of service";
+                    else
+                        document.getElementById('kl').innerHTML = data.display_name;
+                  })
+                  .catch(error => console.error('Error:', error));
+          });
     </script>
-
+<%@ include file="about.jsp" %>
 <%@ include file="footer.jsp" %>
 </body>
 

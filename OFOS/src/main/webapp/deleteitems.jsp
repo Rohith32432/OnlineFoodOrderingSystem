@@ -3,89 +3,100 @@
 <html> 
 <head>
     <link type="text/css" rel="stylesheet" href="css/style.css">
-    <style>
-    body {
-        background: linear-gradient(45deg, #FF5733 0%, #FF5733 50%, #fff 50%);
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
+     <style>
 
-    
+        .cart-container{
+            position: relative;
+            width: 100%;
+            width: 100%;
+            padding: 50px;
+  
+        }
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .cart-items .cart-item{
+            position: relative;
+            display: flex;
+            height: 150px;
+            width: 50%;
+            gap: 3rem;
+            box-sizing: border-box;
+            border-radius: 11px;
+            background-color: rgba(239, 228, 217, 0.742);
+            box-shadow: 0px 0px 8px rgba(76, 71, 58, 0.397);
+        }
+        .cart-item .sample{
+            width: 60%;
+        }
+        .cart-item img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px 0px 0px 10px;
+        }
+        .cart-item .sub-container{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            align-items: baseline;
+            padding: 15px;
+        }
+        .cart-item button {
+            position: absolute;
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: medium;
+            cursor: pointer;
+            width: 10%;
+            right: 15px;
+        }
 
-    .container {
-        background: white;
-        border: 1px solid #0077B6;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin: 45px;
-        display: inline-block;
-        text-align: center;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 1px solid #0077B6;
-    }
-
-    th, td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #0077B6;
-    }
-
-    th {
-        background-color: #FF5733;
-        color: #fff;
-    }
-
-    tr:nth-child(even) {
-        background-color: #FF5733; /* Alternate row background color */
-    }
-
-   <style>
-    /* Other styles... */
-
-    .delete-link {
-        text-decoration: none;
-        color: #FF5733; /* Change the text color to orange */
-        font-weight: bold; /* Make the text bold */
-    }
-</style>
-
+        .cart-item button:hover {
+            background-color: orangered;
+        }
+        .content h1 , h2 {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .content{
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+    </style>
 
 </head>
 <body>
    <%@ include file="restnavbar.jsp" %>
     <br>
-    <div class="container">
-        <div class="header">Delete Items</div>
-        <div class="table-container">
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>NAME</th>
-                    <th>PRICE</th>
-                    <th>ACTION</th>
-                </tr>
-                <c:forEach items="${itemdata}" var="item">
-                    <tr>
-                        <td><c:out value="${item.id}" /></td>
-                        <td><c:out value="${item.name}" /></td>
-                        <td><c:out value="${item.price}" /></td>
-                        <td>
-                            <a href='<c:url value="deleteitem/${item.id}"></c:url>' class="delete-link">Delete</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>
+
+     <div class="cart-container">
+        <div class="cart-items">
+            <c:forEach items="${itemdata}" var="item">
+            <div class="cart-item">
+                <div class="sample">
+                        <img src='displayitemimage?id=${item.id}' alt="">
+                    </div>
+                    <div class="sub-container">
+                    <div class="content">
+                        <h2> <c:out value="${item.name}" /></h2>
+                        <h2> <c:out value="${item.price}/-" /></h2>
+                    </div>
+                    <a href='<c:url value="deleteitem/${item.id}"></c:url>'> <button class="btn">Delete</button></a>
+                    
+                </div>
+            </div>
+        </c:forEach>
         </div>
-    </div>
+        </div>
+    
+    
 </body>
 </html>

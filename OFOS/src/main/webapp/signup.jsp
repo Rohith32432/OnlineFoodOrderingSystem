@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <div class="back"> </div>
     <h2>Welcome to Haveit! </h2>
     <div class="container" id="container">
@@ -50,7 +51,7 @@
                     <li id="c">email</li>
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
+                    <h1>Welcome to Haveit!</h1>
                     <p>Enter your personal details and start journey with us</p>
                     <button class="ghost" id="signUp">Sign Up</button>
                 </div>

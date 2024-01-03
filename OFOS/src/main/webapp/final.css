@@ -152,7 +152,7 @@ body{
 .tell .sec img {
     height: 100%;
     /* border-radius: 0px  0% 250% 0px; */
-    clip-path: polygon(0 0, 100% 0, 56% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
     object-fit: cover;
     /* border-radius: inherit; */
     width: 100%;
@@ -182,7 +182,7 @@ body{
     box-shadow: 0px 0px 10px rgb(41, 41, 41);
 }
 .tell:nth-child(odd) .sec img {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 0% 100%);
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
 }
 
 
@@ -328,4 +328,9 @@ body{
   box-shadow: 0 0 0 0.2rem rgba(255, 85, 0, 0.304);
 }
 
-
+#kl{
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 500;
+}

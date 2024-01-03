@@ -13,22 +13,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     
 </head>
+        <%@ include file="restnavbar.jsp" %>
 <body>
  <!-- Navbar top -->
-    <div class="navbar-top">
-        <div class="title">
-            <h1>My ACCOUNT</h1>
-        </div>
+    
 <br>
         <!-- Navbar -->
-        <%@ include file="restnavbar.jsp" %>
         <!-- End -->
     </div>
     <!-- End -->
 
     <!-- Sidenav -->
     <div class="sidenav">
-        <div class="profile">
+        <div class="xprofile">
             <img img src='displayrestimage?id=${rest.id}' alt="Card Image" class="card-image" alt="" width="100" height="100">
 
             <div class="name">

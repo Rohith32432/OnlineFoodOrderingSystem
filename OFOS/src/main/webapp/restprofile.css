@@ -72,13 +72,13 @@ body {
     width: 250px;
 }
 
-.profile {
+.xprofile {
     margin-bottom: 20px;
     margin-top: -12px;
     text-align: center;
 }
 
-.profile img {
+.xprofile img {
     border-radius: 50%;
     box-shadow: 0px 0px 5px 1px grey;
 }

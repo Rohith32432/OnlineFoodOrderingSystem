@@ -24,8 +24,8 @@
             <div class="nav-container">
                 <a href="reshome" class="nav-inside ">ADD RESTAURANT</a>
                 <a href="customerreg" class="nav-inside">ENTER</a>
-                <a href="about" class="nav-inside">ABOUT</a>
-                <a href="contact" class="nav-inside">CONTACT</a> 
+                <a href="#abtotal" class="nav-inside">ABOUT</a>
+                
             </div>
 
         </div>

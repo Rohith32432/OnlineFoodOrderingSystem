@@ -1,5 +1,7 @@
 package com.klef.jfsd.springboot.model;
 
+import java.sql.Blob;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,8 +22,9 @@ public class Items {
     private int id;
 	@Column(name="item_name",nullable=false,length = 50)
     private String name;
-	@Column(name = "item_url",nullable=false, length=1000)
-	private String url;
+	private Blob image;
+	@Column(name = "item_type",nullable=false)
+	private String type;
 	@Column(name = "item_price",nullable=false)
 	private int price;
 	
@@ -29,41 +32,60 @@ public class Items {
 	@ManyToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "rest_id")
 	private Restaurant restaurant;
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUrl() {
-		return url;
+
+	public Blob getImage() {
+		return image;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+
+	public void setImage(Blob image) {
+		this.image = image;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public int getPrice() {
 		return price;
 	}
+
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}
+
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
+
 	@Override
 	public String toString() {
-		return "Items [id=" + id + ", name=" + name + ", url=" + url + ", price=" + price + ", restaurant=" + restaurant
-				+ "]";
+		return "Items [id=" + id + ", name=" + name + ", image=" + image + ", type=" + type + ", price=" + price
+				+ ", restaurant=" + restaurant + "]";
 	}
+
 	
 }

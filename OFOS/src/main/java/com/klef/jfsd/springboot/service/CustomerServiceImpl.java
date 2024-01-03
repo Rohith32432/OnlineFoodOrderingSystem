@@ -76,16 +76,23 @@ public class CustomerServiceImpl implements CustomerService
 		return cartrepo.viewcart(id);
 	}
 
-
+	public void increment(int count, int id, int itmid) {
+	    // TODO Auto-generated method stub
+	    cartrepo.updateQuantity(count, id,itmid);
+	  }
 	@Override
 	public Items cartbyid(int id) {
 		return itemrepo.findById(id).get();
 	}
 
-	public String addcart(cart c) {
-		 cartrepo.save(c);
-		 return "added suceessful";
-	}
+	public String addcart(cart c,int id,int cid) {
+	    int n=cartrepo.count(id,cid);
+	    if(n==0) {
+	      cartrepo.save(c);
+	      return "added suceessful";
+	    }
+	    return "already there";
+	  }
 
 
 	@Override

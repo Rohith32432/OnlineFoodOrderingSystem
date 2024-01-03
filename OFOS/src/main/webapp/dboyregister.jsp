@@ -3,11 +3,9 @@
 <head>
     <style>
         body {
-            background: linear-gradient(45deg, #FF5733 0%, #FF5733 50%, #fff 50%);
             text-align: center;
             margin: 0;
             padding: 0;
-            display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -21,6 +19,7 @@
             padding: 20px;
             text-align: center;
             width: 70%; /* Adjust the width as needed */
+            margin-top: 30px; /* Increase the top margin to create more distance */
         }
 
         table {
@@ -85,6 +84,8 @@
         <h3><u>Delivery Boy Registration</u></h3>
         <form method="post" action="insertdboy">
             <table>
+ <form method="post" action="insertdboy">
+            <table>
                 <tr>
                     <td class="center"><label>Name</label></td>
                     <td><input type="text" name="name" class="styled-input" required="required" /></td>
@@ -118,8 +119,13 @@
                     <td><input type="number" name="salary" step="0.01" class="styled-input" required/></td>
                 </tr>
                 <tr>
-                    <td class="center"><label>Email ID</label></td>
+                <td class="center"><label>Email ID</label></td>
                     <td><input type="email" name="email" class="styled-input" required/></td>
+                </tr>
+                <tr>
+                <tr>
+                    <td class="center"><label>Username</label></td>
+                    <td><input type="email" name="uname" class="styled-input" required/></td>
                 </tr>
                 <tr>
                     <td class="center"><label>Password</label></td>
@@ -137,6 +143,7 @@
                     <td colspan="2" class="center"><button type="submit" class="styled-button">Register</button></td>
                 </tr>
             </table>
+        </form>            </table>
         </form>
     </div>
 </body>

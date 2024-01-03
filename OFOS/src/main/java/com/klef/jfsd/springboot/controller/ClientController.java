@@ -3,6 +3,7 @@ package com.klef.jfsd.springboot.controller;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.rowset.serial.SerialException;
@@ -22,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.klef.jfsd.springboot.model.Admin;
 import com.klef.jfsd.springboot.model.Customer;
-import com.klef.jfsd.springboot.model.DBoy;
 import com.klef.jfsd.springboot.model.DBoyDetails;
 import com.klef.jfsd.springboot.model.Items;
 import com.klef.jfsd.springboot.model.Restaurant;
@@ -32,9 +32,16 @@ import com.klef.jfsd.springboot.service.AdminService;
 import com.klef.jfsd.springboot.service.CustomerService;
 import com.klef.jfsd.springboot.service.DBoyService;
 import com.klef.jfsd.springboot.service.RestaurantService;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
+
+import com.stripe.model.checkout.Session;
+import com.stripe.param.checkout.SessionCreateParams;
 
 @Controller
 public class ClientController {
@@ -153,7 +160,7 @@ public class ClientController {
 	    	   session.setAttribute("cname", cust.getName());  //cname is a session variable
 	    	   
 	    	 //session
-	         mv.setViewName("viewall");
+	    	   return viewall();
 	       }
 	       else
 	       {
@@ -161,7 +168,7 @@ public class ClientController {
 	         mv.addObject("message", "Login Failed");
 	       }
 	       
-	       return viewall();
+	       return mv;
 	   }
 	
 	@GetMapping("updateprofile")
@@ -279,16 +286,19 @@ public class ClientController {
 	    	return mv;
 	    }
 	  @GetMapping("addtocart")
-	    private ModelAndView addtocart( @RequestParam int id,HttpSession session)
-	    {
-	    	 int rid = (int) session.getAttribute("cid");
-	    	 
-	    	 cart c=new cart();
-	    	 c.setCid(rid);
-	    	 c.setItem(customerService.cartbyid(id));
-	    	 customerService.addcart(c);
-	    	return viewall();
-	    }
+      private ModelAndView addtocart( @RequestParam int id,HttpSession session)
+      {
+         int rid = (int) session.getAttribute("cid");
+         
+         cart c=new cart();
+         c.setCid(rid);
+         c.setQuantity(1);
+         c.setItem(customerService.cartbyid(id));
+         String msg=customerService.addcart(c,id,rid);
+        ModelAndView mv=new ModelAndView("ack");
+        mv.addObject("msg", msg);
+        return mv;
+      }
 	  @GetMapping("viewall")
 	    public ModelAndView viewall()
 	    {
@@ -298,6 +308,23 @@ public class ClientController {
 	    	mv.addObject("resdata", res);
 	    	List<Items> item=itmrepo.findAll();
 	    	mv.addObject("item", item);
+	    	return mv;
+	    }
+	  @GetMapping("incrment")
+	    private String increment(@RequestParam("count") int count,HttpSession session,@RequestParam("id") int id)
+	      {
+	        
+	        int cid=(int) session.getAttribute("cid");
+	        customerService.increment(count, cid,id);
+	        return "redirect:/check";
+	      }
+	  @GetMapping("orders")
+	    public ModelAndView orders(HttpSession session)
+	    {
+		  ModelAndView mv=new ModelAndView("myorder");
+	    	int cid=(int) session.getAttribute("cid");
+	    	List<cart> c=customerService.custitems(cid);
+	    	mv.addObject("data", c);
 	    	return mv;
 	    }
 	  @GetMapping("specitems")
@@ -314,6 +341,7 @@ public class ClientController {
 	    	Restaurant res=restaurantService.vieweProfile(id);
 	    	mv.addObject("res", res);
 	        List<Items> lst = restaurantService.viewitems(id);
+	        
 	        mv.addObject("item", lst);
 	    	return mv;
 	    }
@@ -333,6 +361,65 @@ public class ClientController {
 	  }
 	
 	
+	  @GetMapping("/checkout")
+	  public String paynow(HttpServletRequest request,HttpServletResponse response) throws StripeException
+	  {
+	    HttpSession session =request.getSession();
+	    int cid=(int)session.getAttribute("cid");
+	    Customer c=customerService.viewcustomerbyid(cid);
+	    String email=c.getEmail();
+	    String name=c.getName();
+	    List<cart> lst=customerService.custitems(cid);
+	    Stripe.apiKey="sk_test_51O9mbySA4Ge94X1W1rEfDLfaA4sg7KHTj4quGzsDejtgPuF6EZvd1KpHXi9i4ZfKsz9eaSeQjtFT9bI32Pwt7Hui00Gfxu4LSA";
+	    String YOUR_DOMAIN = "http://localhost:3678";
+	    List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
+	    for (cart item : lst) {
+	        SessionCreateParams.LineItem lineItem = SessionCreateParams.LineItem.builder()
+	            .setPriceData(
+	                SessionCreateParams.LineItem.PriceData.builder()
+	                    .setCurrency("inr")
+	                    .setProductData(
+	                        SessionCreateParams.LineItem.PriceData.ProductData.builder()
+	                            .setName(item.getItem().getName())
+	                            .build()
+	                    )
+	                    .setUnitAmount((long) (item.getItem().getPrice() * 100)) // Assuming 'getPrice()' returns the price in the smallest currency unit (e.g., cents).
+	                    .build()
+	            )
+	            .setQuantity((long) item.getQuantity()) // Assuming 'getQuantity()' returns the quantity of the item.
+	            .build();
+	        lineItems.add(lineItem);
+	    }
+
+	    SessionCreateParams params = SessionCreateParams.builder()
+	        .addAllLineItem(lineItems)
+	        .setMode(SessionCreateParams.Mode.PAYMENT)
+	        .setSuccessUrl("http://localhost:3678/paymentsuccess")
+	        .setCancelUrl("http://localhost:3678/paymentfailed")
+	        .build();
+
+	    Session paymentSession = Session.create(params);
+	    String redirectURL = paymentSession.getUrl();
+	    return "redirect:" + redirectURL;
+
+	  }
+	  
+	  @GetMapping("paymentsuccess")
+	   public ModelAndView paymentsuccess()
+	   {
+	     ModelAndView mv = new ModelAndView();
+	     mv.setViewName("paymentsuccess");
+	     return mv;
+	   }
+	  
+	  @GetMapping("paymentfailed")
+	   public ModelAndView paymentfailed()
+	   {
+	     ModelAndView mv = new ModelAndView();
+	     mv.setViewName("paymentfailed");
+	     return mv;
+	   }
+	  
 	//-------------------------Restaurant methods------------------------------
 	
 	@GetMapping("reshome")
@@ -376,7 +463,7 @@ public class ClientController {
 		}
 		catch(Exception e){
 			msg = e.getMessage();
-			mv.setViewName("displayerror");
+			mv.setViewName("reshome");
             mv.addObject("msg", msg);
 		}
 		return sendEmailR(frommail, toemail, subject, text);
@@ -393,7 +480,7 @@ public class ClientController {
     }
 	
 	@PostMapping("checkrestlogin")
-    public ModelAndView checkrestlogin(HttpServletRequest request)
+    public String checkrestlogin(HttpServletRequest request)
     {
       ModelAndView mv=new ModelAndView();
          String email = request.getParameter("email");
@@ -401,22 +488,25 @@ public class ClientController {
          
            Restaurant rest = restaurantService.checkreslogin(email, pwd);
            System.out.println(rest);
+           String msg=null;
            if(rest!=null)
            {
              
              HttpSession session=request.getSession();
              session.setAttribute("rid", rest.getId()); //rid is session variable
              session.setAttribute("rname", rest.getName());
-             
-             mv.setViewName("additems");
+             mv.setViewName("restindex");
+             mv.addObject("id", rest.getId());
+            msg="redirect:/resindex";
            }
            else
            {
+        	   msg="redirect:/reshome";
              mv.setViewName("reshome");
              mv.addObject("message", "Login Failed");
            }
            
-           return mv;
+           return msg;
        }
 	
 	@GetMapping("updaterest")
@@ -434,7 +524,7 @@ public class ClientController {
       int id = (int) session.getAttribute("rid");
       
       Restaurant rest = restaurantService.viewrestaurantbyid(id);
-      
+      mv.addObject("id", id);
       mv.addObject("rest", rest);
       
       return mv;
@@ -499,36 +589,64 @@ public class ClientController {
     	return mv;
     }
 	
+	@GetMapping("resindex")
+	  public ModelAndView home(HttpSession session)
+	  {
+	    ModelAndView mv=new ModelAndView("restindex");
+	     int id = (int) session.getAttribute("rid");
+	    Restaurant res=restaurantService.vieweProfile(id);
+	      mv.addObject("id", id);
+	      mv.addObject("res", res);
+	    return mv;
+	  }
+	
 	//-------------------------Items methods------------------------------
 	
 	@GetMapping("additems")
-    public ModelAndView addres()
+    public ModelAndView addres(HttpSession session)
     {
       ModelAndView mv = new ModelAndView();
       mv.setViewName("additems");
+      int restid = (int) session.getAttribute("rid");
+
+      mv.addObject("id", restid);
       return mv;
     }
 	
 	@PostMapping("demo")
-    public ModelAndView demo(HttpServletRequest request, HttpSession session)
+    public ModelAndView demo(HttpServletRequest request, HttpSession session, @RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException
     {
       ModelAndView mv = new ModelAndView();
       String name=request.getParameter("name");
-      String url=request.getParameter("url");
+      byte[] bytes = file.getBytes();
+      Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+      String type = request.getParameter("type");
       int amt=Integer.parseInt(request.getParameter("amt"));
       Restaurant restaurant = new Restaurant();
       int restid = (int) session.getAttribute("rid");
       restaurant.setId(restid);
       Items itm=new Items();
       itm.setName(name);
-      itm.setUrl(url);
+      itm.setImage(blob);
+      itm.setType(type);
       itm.setPrice(amt);
       itm.setRestaurant(restaurant);
      restaurantService.additems(itm);
       mv.setViewName("additems");
+      mv.addObject("id", restid);
       return mv;
     }
 	
+	@GetMapping("displayitemimage")
+    public ResponseEntity<byte[]> displayitemimagedemo(@RequestParam("id") int id) throws IOException, SQLException
+    {
+      Items product =  restaurantService.itembyid(id);
+      byte [] imageBytes = null;
+      imageBytes = product.getImage().getBytes(1,(int) product.getImage().length());
+
+      return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+    }
+    
 	@GetMapping("viewitems")
     public ModelAndView viewitems(HttpSession session)
     {
@@ -536,6 +654,7 @@ public class ClientController {
       mv.setViewName("viewitems");
       int restid = (int) session.getAttribute("rid");  //foreign key creation for session
       List<Items> itm=restaurantService.viewitems(restid);
+      mv.addObject("id", restid);
       mv.addObject("itemlst", itm);
       return mv;
     }
@@ -547,6 +666,7 @@ public class ClientController {
       int restid = (int) session.getAttribute("rid");
       List<Items> ilist = restaurantService.viewitems(restid);
       mv.addObject("itemdata", ilist);
+      mv.addObject("id", restid);
       mv.setViewName("deleteitems");
 
       
@@ -700,77 +820,80 @@ public class ClientController {
 	  }
 	  
 	  @PostMapping("checkdboylogin")
-	  public ModelAndView checkdboylogin(HttpServletRequest request) {
-	    ModelAndView mv = new ModelAndView();
-	         
-	        
-	         String uname = request.getParameter("uname");
-	         String pwd = request.getParameter("pwd");
-	         
-	         DBoy d = dboyService.checkdboylogin(uname, pwd);
-	         
-	         if(d!=null)
-	         {
-	           mv.setViewName("delboyhome");
-	         }
-	         else
-	         {
-	           mv.setViewName("delboylogin");
-	           mv.addObject("message", "Login Failed");
-	         }
-	         return mv;
-	    
-	  }
-	  @GetMapping("/displayMap")
-	  public String map() {
-	  return "map";
-	  }
-	  
-	  @PostMapping("insertdboy")
-	    public ModelAndView insertdboy(HttpServletRequest request)
-	    {
+	    public ModelAndView checkdboylogin(HttpServletRequest request) {
 	      ModelAndView mv = new ModelAndView();
+	           
+	          
+	           String uname = request.getParameter("uname");
+	           String pwd = request.getParameter("pwd");
+	           
+	           DBoyDetails d = dboyService.checkdboylogin(uname, pwd);
+	           
+	           if(d!=null)
+	           {
+	             mv.setViewName("delboyhome");
+	           }
+	           else
+	           {
+	             mv.setViewName("delboylogin");
+	             mv.addObject("message", "Login Failed");
+	           }
+	           return mv;
 	      
-	      String msg = null;
-	      try
-	      {
-	        String name = request.getParameter("name");
-	        String gender = request.getParameter("gender");
-	        String dob = request.getParameter("dob");
-	        String dept = request.getParameter("dept");
-	        String sal = request.getParameter("salary");
-	        double salary = Double.parseDouble(sal);
-	        String email = request.getParameter("email");
-	        String pwd = request.getParameter("pwd");
-	        String location = request.getParameter("location");
-	        String contact = request.getParameter("contact");
-	        
-	        DBoyDetails d = new DBoyDetails();
-	        d.setName(name);
-	        d.setGender(gender);
-	        d.setDateofbirth(dob);
-	        d.setDepartment(dept);
-	        d.setSalary(salary);
-	        d.setEmail(email);
-	        d.setPassword(pwd);
-	        d.setLocation(location);
-	        d.setContact(contact);
-	        
-	        msg = adminService.adddboy(d);
-	        
-	        mv.setViewName("displaymsgdboy");
-	        mv.addObject("message", msg);
-	        
-	      }
-	      catch(Exception e)
-	      {
-	        msg = e.getMessage();
-	        
-	        mv.setViewName("displayerrordboy");
-	        mv.addObject("message", msg);
-	      }
-	      return mv;
 	    }
+	    
+	    @GetMapping("/displayMap")
+	    public String map() {
+	    return "map";
+	    }
+	    
+	    @PostMapping("insertdboy")
+	      public ModelAndView insertdboy(HttpServletRequest request)
+	      {
+	        ModelAndView mv = new ModelAndView();
+	        
+	        String msg = null;
+	        try
+	        {
+	          String name = request.getParameter("name");
+	          String gender = request.getParameter("gender");
+	          String dob = request.getParameter("dob");
+	          String dept = request.getParameter("dept");
+	          String sal = request.getParameter("salary");
+	          double salary = Double.parseDouble(sal);
+	          String email = request.getParameter("email");
+	          String pwd = request.getParameter("pwd");
+	          String username =request.getParameter("uname");
+	          String location = request.getParameter("location");
+	          String contact = request.getParameter("contact");
+	          
+	          DBoyDetails d = new DBoyDetails();
+	          d.setName(name);
+	          d.setGender(gender);
+	          d.setDateofbirth(dob);
+	          d.setDepartment(dept);
+	          d.setSalary(salary);
+	          d.setEmail(email);
+	          d.setUsername(username);
+	          d.setPassword(pwd);
+	          d.setLocation(location);
+	          d.setContact(contact);
+	          
+	          msg = adminService.adddboy(d);
+	          
+	          mv.setViewName("displaymsgdboy");
+	          mv.addObject("message", msg);
+	          
+	        }
+	        catch(Exception e)
+	        {
+	          msg = e.getMessage();
+	          
+	          mv.setViewName("displayerrordboy");
+	          mv.addObject("message", msg);
+	        }
+	        return mv;
+	      }
 	
 	//-------------------------Add-ons(Mail,Loading)------------------------------
 	

@@ -1,21 +1,18 @@
 <%@ page contentType="text/html; charset=ISO-8859-1" isELIgnored="false" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 
   <title>add-items</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-image: url("./static/additemsbg.jpg");
-      background-size: cover;
+    .mainclass{
+      width: 100%;
       display: flex;
-      align-items: center;
       justify-content: center;
+      position: relative;
       height: 100vh;
-      overflow: hidden;
+      align-items: center;
     }
 
     .container {
@@ -25,6 +22,8 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       opacity: 0;
+    
+     top: 100px;
       transform: translateY(-20px);
       animation: fadeInUp 0.5s forwards;
     }
@@ -106,16 +105,26 @@
 </head>
 <body>
 <%@ include file="restnavbar.jsp" %>
+  <div class="mainclass">
   <div class="container">
-    <form method="post" action="demo">
+    <form method="post" action="demo" enctype="multipart/form-data">
       <table class="form-table">
         <tr>
           <td><label for="name">Name</label></td>
           <td><input type="text" id="name" name="name" required="required"/></td>
         </tr>
         <tr>
-          <td><label for="url">URL</label></td>
-          <td><input type="text" id="url" name="url" required="required"/></td>
+          <td><label for="img"> choose file</label></td>
+          <td><input type="file" name="image" id="img" required="required"></td>
+        </tr>
+        <tr>
+       <td><label>Type</label></td>
+        <td>
+        <input type="radio" id="veg" name="type" value="veg" required="required">
+        <label for="veg">Veg</label>
+        <input type="radio" id="nonveg" name="type" value="nonveg" required="required">
+        <label for="nonveg">Non-Veg</label>
+        </td>
         </tr>
         <tr>
           <td><label for="amt">Amount</label></td>
@@ -128,5 +137,6 @@
     </form>
     <a href="viewitems"><button class="view-items-button">View Items</button></a>
   </div>
+</div>
 </body>
 </html>

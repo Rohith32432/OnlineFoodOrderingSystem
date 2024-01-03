@@ -29,7 +29,7 @@
     <!-- Sidenav -->
     <div class="sidenav">
         <div class="profile">
-            <img src="../static/haveit.jpg" alt="" width="100" height="100">
+            <img src="./static/haveit.jpg" alt="" width="100" height="100">
 
             <div class="name">
                 ${cust.name}

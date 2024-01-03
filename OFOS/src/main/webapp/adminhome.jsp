@@ -3,18 +3,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     body {
       background: linear-gradient(45deg, #FF5733 0%, #FF5733 50%, #fff 50%);
       text-align: center;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
 
+    }
+.main{
+height: 90vh;
+display: flex;
+justify-content: space-around;;
+align-items: center;
+
+}
 
 
    .card {
@@ -81,7 +86,7 @@
 <body>
 <%@ include file="adminnavbar.jsp" %>
     <br>
-
+  <div class="main">
   <div class="card">
     <span class="total-text">Total Restaurant = ${rcount}</span>
     <div class="fireworks" style="left: 50%; top: 50%;"></div>
@@ -99,5 +104,6 @@
     <div class="fireworks" style="left: 60%; top: 60%;"></div>
     <div class "fireworks" style="left: 40%; top: 60%;"></div>
   </div>
+ </div>
 </body>
 </html>

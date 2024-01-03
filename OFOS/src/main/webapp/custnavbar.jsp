@@ -208,9 +208,9 @@
         <h1>have it..</h1>
       </div>
       <div class="nav-container">
-        <a href="" class="nav-inside ">Home</a>
+        <a href="viewall" class="nav-inside ">Home</a>
         <a href="check" class="nav-inside">cart</a>
-        <a href="#" class="nav-inside">my orders</a>
+        <a href="orders" class="nav-inside">my orders</a>
 
        
         <div class="add">
